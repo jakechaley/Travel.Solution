@@ -98,6 +98,10 @@ namespace Travel.Controllers
 
       return NoContent();
     }
+    private bool PlaceExists(int id)
+    {
+      return _db.Places.Any(e => e.PlaceId == id);
+    }
     // // Patch, how does this work????
     // [HttpPatch("{id}")]
     // public async Task<IActionResult> Patch(int id, Place place, string review)
@@ -136,9 +140,27 @@ namespace Travel.Controllers
       return NoContent();
     }
 
-    private bool PlaceExists(int id)
+    //RANDOM: api/Places/Random
+    [HttpGet("Random")]
+    public async Task<ActionResult<Place>> RandomPlace()
     {
-      return _db.Places.Any(e => e.PlaceId == id);
+      Random random = new Random();
+      int dbCount = _db.Places.Count();
+      int id = random.Next(1, dbCount);
+      var place = await _db.Places.FindAsync(id);
+      return place;
+      //  var query =  await _db.Places.ToListAsync(); // get places and put in list
+      //  Random rand = new Random(); //create random 
+      //  int num = rand.Next(); //gets the next random number
+      //  return  query[num];
+      
     }
+    //var userItems = _db.Places.ToList();
+
+// string[] names = new string[] { "name1", "name2", "name3" };
+// Random rnd = new Random();
+// int index = rnd.Next(names.Length);
+// Console.WriteLine($"Name: {names[index]}");
   }
 }
+
