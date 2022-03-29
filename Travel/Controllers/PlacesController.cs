@@ -148,19 +148,8 @@ namespace Travel.Controllers
       int dbCount = _db.Places.Count();
       int id = random.Next(1, dbCount);
       var place = await _db.Places.FindAsync(id);
-      return place;
-      //  var query =  await _db.Places.ToListAsync(); // get places and put in list
-      //  Random rand = new Random(); //create random 
-      //  int num = rand.Next(); //gets the next random number
-      //  return  query[num];
-      
+      return place;    
     }
-    //var userItems = _db.Places.ToList();
-
-// string[] names = new string[] { "name1", "name2", "name3" };
-// Random rnd = new Random();
-// int index = rnd.Next(names.Length);
-// Console.WriteLine($"Name: {names[index]}");
   }
 }
 
