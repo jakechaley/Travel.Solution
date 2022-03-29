@@ -9,6 +9,7 @@ using Travel.Models;
 
 namespace Travel.Controllers
 {
+  [Produces("application/json")]
   [Route("api/[controller]")]
   [ApiController]
   public class PlacesController : ControllerBase
@@ -43,7 +44,7 @@ namespace Travel.Controllers
 
       if (minimumId > 0)
       {
-          query = query.Where(entry => entry.PlaceId >= minimumId);
+        query = query.Where(entry => entry.PlaceId >= minimumId);
       }
 
       if (state != null)
@@ -115,7 +116,26 @@ namespace Travel.Controllers
     // }
 
     // POST: api/Animals
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     POST /Place
+    ///     {
+    ///        "id": 1,
+    ///        "city": "SomeCity",
+    ///        "state": "SomeState"
+    ///     }
+    ///
+    /// </remarks>
+    /// <param name="place"></param>
+    /// <returns>A newly created Place</returns>
+    /// <response code="201">Returns the newly created place</response>
+    /// <response code="400">If the item is null</response>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>      
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Place>> Post(Place place)
     {
       _db.Places.Add(place);
@@ -125,6 +145,9 @@ namespace Travel.Controllers
     }
 
     // DELETE: api/Places/5
+    /// <summary>
+    /// Deletes a specific Place.
+    /// </summary>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePlace(int id)
     {
@@ -148,7 +171,7 @@ namespace Travel.Controllers
       int dbCount = _db.Places.Count();
       int id = random.Next(1, dbCount);
       var place = await _db.Places.FindAsync(id);
-      return place;    
+      return place;
     }
   }
 }

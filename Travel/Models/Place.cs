@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 namespace Travel.Models
 {
@@ -12,6 +13,9 @@ namespace Travel.Models
     [Required]
     public string Country { get; set; }
      [Required]
+
+
+    [DefaultValue("")]
     public string Review { get; set; }
   }
 }
